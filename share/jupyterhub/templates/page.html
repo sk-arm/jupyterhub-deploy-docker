@@ -78,6 +78,17 @@
       }
     </script>
 
+    <style>
+      .jpy-logo {
+      height: 22px;
+      margin-top: 8px;
+      }
+      #ipython_notebook img {
+      height: 22px;
+      margin-top: 4px;
+      }
+    </style>
+
     {% block meta %}
     {% endblock %}
 
@@ -110,7 +121,7 @@
       </div>
 
       <div class="collapse navbar-collapse" id="thenavbar">
-        {% if user %}
+        {% if 0 %}
         <ul class="nav navbar-nav">
           {% block nav_bar_left_items %}
             <li><a href="{{base_url}}home">Home</a></li>

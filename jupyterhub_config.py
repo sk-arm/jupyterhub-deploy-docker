@@ -10,6 +10,8 @@ c = get_config()
 # avoid having to rebuild the JupyterHub container every time we change a
 # configuration parameter.
 
+c.JupyterHub.logo_file = '/opt/conda/share/jupyterhub/static/images/logo.svg'
+
 # Spawn single-user servers as Docker containers
 c.JupyterHub.spawner_class = 'dockerspawner.DockerSpawner'
 # Spawn containers from this image
@@ -43,6 +45,50 @@ c.DockerSpawner.remove_containers = True
 # For debugging arguments passed to spawned containers
 c.DockerSpawner.debug = True
 
+c.DockerSpawner.options_form = """
+        <div class="form-group">
+            <label for="processorNumber" class="col-sm-6 col-form-label col-form-label-sm">Number Of Processors</label>
+            <div class="col-sm-6" style="margin-bottom: 10px">
+                <select id="processorNumber" name="processorNumber" class="form-control">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3" selected="1">3</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="processorType" class="col-sm-6 col-form-label col-form-label-sm">Type Of Processor</label>
+            <div class="col-sm-6" style="margin-bottom: 10px">
+                <select id="processorType" name="processorType" class="form-control">
+                    <option value="cpu">CPU</option>
+                    <option value="gpu" selected="1">GPU</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="ram" class="col-sm-6 col-form-label col-form-label-sm">RAM</label>
+            <div class="col-sm-6" style="margin-bottom: 10px">
+                <select id="ram" name="ram" class="form-control">
+                    <option value="8gb">8 GB</option>
+                    <option value="16gb" selected="1">16 GB</option>
+                    <option value="32gb">32 GB</option>
+                    <option value="64gb">64 GB</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="storage" class="col-sm-6 col-form-label col-form-label-sm">Storage</label>
+            <div class="col-sm-6" style="margin-bottom: 10px">
+                <select id="storage" name="storage" class="form-control">
+                    <option value="500gb" selected="1">500 GB</option>
+                    <option value="1tb">1 TB</option>
+                    <option value="2tb">2 TB</option>
+                    <option value="4tb">4 TB</option>
+                </select>
+            </div>
+        </div>
+        """
+
 # User containers will access hub by container name on the Docker network
 c.JupyterHub.hub_ip = 'jupyterhub'
 c.JupyterHub.hub_port = 8080
@@ -53,8 +99,12 @@ c.JupyterHub.ssl_key = os.environ['SSL_KEY']
 c.JupyterHub.ssl_cert = os.environ['SSL_CERT']
 
 # Authenticate users with GitHub OAuth
-c.JupyterHub.authenticator_class = 'oauthenticator.GitHubOAuthenticator'
-c.GitHubOAuthenticator.oauth_callback_url = os.environ['OAUTH_CALLBACK_URL']
+
+#c.JupyterHub.authenticator_class = 'oauthenticator.GitHubOAuthenticator'
+#c.GitHubOAuthenticator.oauth_callback_url = os.environ['OAUTH_CALLBACK_URL']
+
+c.JupyterHub.authenticator_class = 'dummyauthenticator.DummyAuthenticator'
+c.DummyAuthenticator.password = "password"
 
 # Persist hub data on volume mounted inside container
 data_dir = os.environ.get('DATA_VOLUME_CONTAINER', '/data')

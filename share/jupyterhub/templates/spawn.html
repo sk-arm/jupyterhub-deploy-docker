@@ -8,7 +8,7 @@
 <div class="container">
   {% block heading %}
   <div class="row text-center">
-    <h1>Spawner Options</h1>
+    <h1>Jupyter Setup</h1>
   </div>
   {% endblock %}
   <div class="row col-sm-offset-2 col-sm-8">
@@ -23,7 +23,11 @@
     <form enctype="multipart/form-data" id="spawn_form" action="{{url}}" method="post" role="form">
       {{spawner_options_form | safe}}
       <br>
-      <input type="submit" value="Spawn" class="btn btn-jupyter form-control">
+      <div class="form-group">
+        <div class="col-sm-offset-6 col-sm-6">
+            <input type="submit" value="Launch" class="btn btn-jupyter">
+        </div>
+      </div>
     </form>
   </div>
 </div>
