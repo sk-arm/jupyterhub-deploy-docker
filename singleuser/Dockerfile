@@ -1,7 +1,7 @@
 ARG DOCKER_NOTEBOOK_IMAGE
 FROM $DOCKER_NOTEBOOK_IMAGE
 ARG JUPYTERHUB_VERSION
-RUN python3 -m pip install --no-cache tensorflow
+RUN python3 -m pip install --no-cache tensorflow pandas sklearn matplotlib
 RUN python3 -m pip install --no-cache jupyterhub==$JUPYTERHUB_VERSION
 ADD model_manager-0.0.1-py3-none-any.whl /tmp
 RUN python3 -m pip install /tmp/model_manager-0.0.1-py3-none-any.whl
